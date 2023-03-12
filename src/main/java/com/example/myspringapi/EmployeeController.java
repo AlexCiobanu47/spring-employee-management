@@ -14,6 +14,6 @@ public class EmployeeController {
         return List.of(
                 new Employee("John", "Doe", 22, "john@yahoo.com", "Intern"),
                 new Employee("James", "Michaels", 40, "james@gmail.com", "Senior")
-                );
+        );
     }
 }

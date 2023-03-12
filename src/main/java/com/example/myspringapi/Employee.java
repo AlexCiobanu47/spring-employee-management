@@ -1,13 +1,29 @@
 package com.example.myspringapi;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "employees")
 public class Employee {
+    @Id
+    @SequenceGenerator(
+            name = "employee_sequence",
+            allocationSize = 1
+    )
+    @GeneratedValue(
+            generator = "employee_sequence",
+            strategy = GenerationType.SEQUENCE
+    )
+    private Long id;
     private String firstName;
     private String lastName;
     private int age;
     private String email;
     private String role;
 
+    public Employee() {
 
+    }
     public Employee(String firstName, String lastName, int age, String email, String role) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -15,6 +31,8 @@ public class Employee {
         this.email = email;
         this.role = role;
     }
+
+
 
     public String getFirstName() {
         return firstName;
@@ -54,5 +72,8 @@ public class Employee {
 
     public void setRole(String role) {
         this.role = role;
+    }
+    public Long getId(){
+        return id;
     }
 }
