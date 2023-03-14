@@ -23,7 +23,7 @@ public class EmployeeService implements IEmployeeService{
     @Override
     public void updateEmployee(Long id, Employee employee) {
         Employee employeeToBeUpdated = employeeRepository.findById(id).orElseThrow(
-                () -> new IllegalStateException(String.format("Employeed with id %s does not exist.", id))
+                () -> new IllegalStateException(String.format("Employee with id %s does not exist.", id))
         );
         employeeToBeUpdated.setFirstName(employee.getFirstName());
         employeeToBeUpdated.setLastName(employee.getLastName());
@@ -32,4 +32,14 @@ public class EmployeeService implements IEmployeeService{
         employeeToBeUpdated.setRole(employee.getRole());
         employeeRepository.save(employeeToBeUpdated);
     }
+
+    @Override
+    public void deleteEmployee(Long id) {
+        boolean idExists = employeeRepository.existsById(id);
+        if(!idExists){
+            throw new IllegalStateException(String.format("Employee with id %s does not exist.", id));
+        }
+        employeeRepository.deleteById(id);
+    }
+
 }
