@@ -21,4 +21,8 @@ public class EmployeeController {
     public void createEmployee(@RequestBody Employee employee){
         employeeService.createEmployee(employee);
     }
+    @PutMapping(path = "{id}")
+    public void updateEmployee(@PathVariable Long id, @RequestBody Employee employee){
+        employeeService.updateEmployee(id, employee);
+    }
 }

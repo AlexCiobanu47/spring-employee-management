@@ -19,4 +19,17 @@ public class EmployeeService implements IEmployeeService{
     public void createEmployee(Employee employee) {
         employeeRepository.save(employee);
     }
+
+    @Override
+    public void updateEmployee(Long id, Employee employee) {
+        Employee employeeToBeUpdated = employeeRepository.findById(id).orElseThrow(
+                () -> new IllegalStateException(String.format("Employeed with id %s does not exist.", id))
+        );
+        employeeToBeUpdated.setFirstName(employee.getFirstName());
+        employeeToBeUpdated.setLastName(employee.getLastName());
+        employeeToBeUpdated.setAge(employee.getAge());
+        employeeToBeUpdated.setEmail(employee.getEmail());
+        employeeToBeUpdated.setRole(employee.getRole());
+        employeeRepository.save(employeeToBeUpdated);
+    }
 }
