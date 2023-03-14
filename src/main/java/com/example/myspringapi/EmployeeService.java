@@ -12,12 +12,15 @@ public class EmployeeService implements IEmployeeService{
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
-    private boolean checkForEmptyString(Employee employee){
+    private boolean checkEmployeeFields(Employee employee){
         if(Objects.equals(employee.getFirstName(), "")){
             throw new IllegalStateException("First name can not be an empty field");
         }
         if(Objects.equals(employee.getLastName(), "")){
             throw new IllegalStateException("Last name can not be an empty field");
+        }
+        if(employee.getAge() < 18){
+            throw new IllegalStateException("Age should be bigger than 18.");
         }
         if(Objects.equals(employee.getEmail(), "")){
             throw new IllegalStateException("Email can not be an empty field");
@@ -34,7 +37,7 @@ public class EmployeeService implements IEmployeeService{
 
     @Override
     public void createEmployee(Employee employee) {
-        if(checkForEmptyString(employee)) {
+        if(checkEmployeeFields(employee)) {
             employeeRepository.save(employee);
         }
     }
@@ -44,7 +47,7 @@ public class EmployeeService implements IEmployeeService{
         Employee employeeToBeUpdated = employeeRepository.findById(id).orElseThrow(
                 () -> new IllegalStateException(String.format("Employee with id %s does not exist.", id))
         );
-        if(checkForEmptyString(employee)) {
+        if(checkEmployeeFields(employee)) {
             employeeToBeUpdated.setFirstName(employee.getFirstName());
             employeeToBeUpdated.setLastName(employee.getLastName());
             employeeToBeUpdated.setAge(employee.getAge());
